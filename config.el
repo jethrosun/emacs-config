@@ -92,7 +92,16 @@
 ;; treemacs
 (after! treemacs
   (setq treemacs-position 'right
+            treemacs-show-hidden-files               nil
         treemacs-git-mode 'deferred))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-height 25)     ;; Sets modeline height
+  (doom-modeline-bar-width 5)   ;; Sets right bar width
+  (doom-modeline-persp-name t)  ;; Adds perspective name to modeline
+  (doom-modeline-persp-icon t)) ;; Adds folder icon next to persp name
 
 ;; vterm
 ;; (after! vterm
@@ -104,3 +113,6 @@
 
 (setq ispell-program-name "aspell"
       ispell-dictionary "english")
+
+;; https://emacs.stackexchange.com/questions/2871/keeping-my-org-files-in-sync-across-multiple-computers
+(add-hook 'auto-save-hook 'org-save-all-org-buffers)

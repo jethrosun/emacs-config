@@ -18,6 +18,27 @@ about a dozen others.
 Other than that, resources are put in [[file:misc/][misc]], and you may find submodules for
 packages of mine in [[file:lisp/][lisp]].
 
+* Modification
+** org
+
+   https://github.com/lovejavaee/dotfiles/tree/7a9eaab91d8f43282af27bf1f3037f641f81003e/dot_doom.d
+
+   https://github.com/bergheim/dotfiles/tree/70dcf7e13d9632d9c9c11c4681e46202add2bb0d/.config/doom
+
+   https://github.com/pvazteixeira/dotfiles/tree/edf4ca1acc74f9397ea487c4483029bdfc463daf/doom/.config/doom
+   
+*** Not 
+
+    https://github.com/jackbaty/doom.d/blob/4df39278c89b89e0b5825c9c033c4589509579e4/init.el
+    
+    https://github.com/telotortium/doom.d/blob/4d368ed7ca088c37857afee599184f23d3ccc22f/init.el
+    
+    https://github.com/Oghma/emacs_doom/blob/7031b460ebd350c2756e7ef1a50254208a754a89/init.el
+  
+    https://github.com/hugcis/dotfiles/blob/5f9f85a29981b312ebd5ad36d57bf6089d18989f/.doom.d/init.el
+
+    https://github.com/librephoenix/nixos-config/blob/72b451aec5f1e1884bcc14a64c35feaa9f0b071d/user/app/doom-emacs/init.el
+
 * Installation
 
 This is mostly a personal note, see the [[https://tecosaur.github.io/emacs-config/config.html#notes-unwary-adventurer][warning]] in my config.
