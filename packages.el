@@ -37,6 +37,51 @@
 ;; our package manager can't deal with; see radian-software/straight.el#279)
 ;; (package! builtin-package :recipe (:branch "develop"))
 
+
+(package! org-mru-clock)
+(package! org-super-agenda)
+(package! org-ql)
+(package! org-sticky-header)
+(package! doct)
+;; https://github.com/IvanMalison/org-projectile
+;; (package! org-projectile)
+(package! org-fancy-priorities)
+;; (package! helm-org-rifle)
+(package! org-roam-ui)
+
+;; (package! org-caldav)
+;; (package! calendar-norway)
+;; (package! excorporate)
+
+;; (package! mu4e-alert :disable t)
+;; (package! mu4e-thread
+;;   :recipe (:host github :repo "rougier/mu4e-thread"))
+(package! evil-matchit)
+
+;; should improve auto-complete (in theory)
+(package! corfu)
+(package! orderless)
+(package! cape)
+
+(package! auto-dim-other-buffers)
+(package! tao-theme) ;; uncolored back and white themes
+(package! heaven-and-hell)
+(package! rainbow-mode)
+;; allows you to search in a browser from emacs
+;; (package! engine-mode)
+
+(package! restclient)
+;; this is useful for things like org repos
+(package! git-auto-commit-mode)
+
+;; TODO: trials
+
+(package! org-recent-headings)
+(package! ox-report)
+(package! affe)
+(package! deadgrep)
+
+
 ;; Use `:pin' to specify a particular commit to install.
 ;; (package! builtin-package :pin "1a2b3c4d5e")
 
