@@ -44,9 +44,11 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 19))
-;;
+;; (setq doom-font (font-spec :family "Fira Code" :size 18 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 19))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 18 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 19))
+
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
@@ -66,7 +68,7 @@
   ;; :config
   ;; (setq mixed-pitch-set-heigth t)
   ;; (set-face-attribute 'variable-pitch nil :height 1.3))
-  
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -78,6 +80,8 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Dropbox/org/")
 
+(load! "colors")
+(load! "keybindings")
 
 (global-visual-line-mode) ;; Always wrap long lines
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow)) ;; Show arrows on wrapped lines
@@ -219,7 +223,7 @@
 ;; (after! mu4e (load! "+mu4e"))
 (after! org (load! "+org"))
 
-;; (load! "completion")
+(load! "completion")
 
 (use-package! orgit
   ;; Automatically copy orgit link to last commit after commit

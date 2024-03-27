@@ -8,6 +8,8 @@ abbrev.el
 # packages.el
 # cli.el
 setup.sh
+custom.el
+
 
 !publish
 !publish/config.html
