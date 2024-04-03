@@ -1,5 +1,104 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(setq-default
+ ;; Look-and-feel
+
+ ;; Avy
+ avy-all-windows 'all-frames
+
+;; decrease the timeout before jumping around the buffer
+avy-timeout-seconds 0.3
+
+;; If tooltips turned on, make tips appear promptly
+tooltip-delay 0.1  ; default is 0.7 second)
+
+ ;; Line numbers
+ display-line-numbers-type 'relative
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+display-line-numbers-type t
+
+;; use visible buffer, not just the current line
+evil-snipe-scope 'visible
+
+;; Dired
+ dired-dwim-target t
+
+  ;; Workspaces
+ +workspaces-main "default"
+ +workspaces-switch-project-function #'find-file
+
+ ;; Reload buffers on file updates
+;; helps avoid file sync issues
+ global-auto-revert-mode t)
+
+
+;; Ace window
+(after! ace-window
+  (setq aw-scope 'global))
+
+;; Jump bindings
+(after! evil
+  (map! :leader
+        (:desc "jump" :prefix "j"
+         :desc "Jump to current clock" :nv "C" #'org-clock-goto
+         :desc "Jump to character" :nv "c" #'evil-avy-goto-char
+         :desc "Jump to function" :nv "f" #'find-function
+         :desc "Jump to line" :nv "l" #'evil-avy-goto-line
+         :desc "Jump to variable" :nv "v" #'find-variable)))
+
+
+;; Custom leader bindings
+(map!
+ (:prefix
+  "C-c i"
+  (:desc "Insert today's date" "d" #'myme/insert-date)
+  (:desc "Insert current timestamp" "t" #'myme/insert-timestamp))
+ (:prefix
+  "g z"
+  (:desc "Skip and goto next match" :nv "s" #'evil-mc-skip-and-goto-next-match)
+  (:desc "Skip and goto prev match" :nv "S" #'evil-mc-skip-and-goto-prev-match))
+ (:leader
+  (:prefix "F" :desc "Frame"
+   :desc "Delete frame" :nv "d" #'delete-frame
+   :desc "New frame" :nv "n" #'make-frame)
+  (:prefix "b"
+   :desc "Rename buffer" :nv "r" #'rename-buffer)
+  (:prefix "c"
+   :desc "Compile" :nv "c" #'compile
+   :desc "Compile" :nv "k" #'kill-compilation
+   :desc "Hints"   :nv "h" #'myme/lsp-inlay-hints-mode)
+  (:prefix "d"
+   :desc "Ediff buffers" :nv "b" #'ediff-buffers)
+  (:prefix "o"
+   (:prefix "M" :desc "Maps"
+    :desc "Search maps" :nv "s" #'osm-search))
+  (:prefix "p"
+   :desc "Open dired in project" :nv "d" #'projectile-dired
+   :desc "Run async cmd in project" :nv "&" #'projectile-run-async-shell-command-in-root
+   :desc "Test project" :nv "t" #'projectile-test-project)
+  (:prefix "q"
+   :desc "Kill emacs" :nv "k" #'save-buffers-kill-emacs)
+  (:prefix "s"
+   :desc "Consult complex commands" :nv "c" #'consult-complex-command)
+  (:prefix ("t" . "toggle")
+   :desc "Fill Column Indicator"        "C" #'global-display-fill-column-indicator-mode
+   :desc "Flymake"                      "c" #'flymake-mode
+   (:when (modulep! :checkers syntax)
+     :desc "Flycheck"                   "c" #'flycheck-mode)
+   :desc "Toggle buffer auto-formatting" :nv "f" #'format-all-mode)
+  (:desc "theme" :prefix "T"
+   :desc "Switch theme" :nv "T" #'load-theme)))
+
+;; Doom pop-ups
+(set-popup-rule! "^\\*info\\*$" :slot 2 :vslot 2 :size 0.45 :select t :side 'right)
+(+popup-cleanup-rules-h)
+
+;; help entries are often more long form. put them in a proper window
+;; (set-popup-rule! "^\\*\\([Hh]elp\\|Apropos\\)" :ignore t)
+
+
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
@@ -18,16 +117,9 @@
 (setq which-key-idle-delay 0.3)
 ;; (which-key-mode 1)
 
-;; helps avoid file sync issues
-(global-auto-revert-mode 1)
-
-
 ;; this will draw a vertical line to indicate line length
 (global-display-fill-column-indicator-mode 0)
 (setq-default fill-column 100)
-
-;; help entries are often more long form. put them in a proper window
-(set-popup-rule! "^\\*\\([Hh]elp\\|Apropos\\)" :ignore t)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -70,13 +162,6 @@
 ;; :config
 ;; (setq mixed-pitch-set-heigth t)
 ;; (set-face-attribute 'variable-pitch nil :height 1.3))
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-;; use visible buffer, not just the current line
-(setq evil-snipe-scope 'visible)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -137,12 +222,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 ;;
-
-;; decrease the timeout before jumping around the buffer
-(setq avy-timeout-seconds 0.3)
-
-;; If tooltips turned on, make tips appear promptly
-(setq tooltip-delay 0.1)  ; default is 0.7 second)
 
 ;; this is a hack that allows us to use lookups to other windows
 ;; https://github.com/hlissner/doom-emacs/issues/3397
