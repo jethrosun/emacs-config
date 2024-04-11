@@ -6,31 +6,31 @@
  ;; Avy
  avy-all-windows 'all-frames
 
-;; decrease the timeout before jumping around the buffer
-avy-timeout-seconds 0.3
+ ;; decrease the timeout before jumping around the buffer
+ avy-timeout-seconds 0.3
 
-;; If tooltips turned on, make tips appear promptly
-tooltip-delay 0.1  ; default is 0.7 second)
+ ;; If tooltips turned on, make tips appear promptly
+ tooltip-delay 0.1  ; default is 0.7 second)
 
  ;; Line numbers
  display-line-numbers-type 'relative
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-display-line-numbers-type t
+ ;; This determines the style of line numbers in effect. If set to `nil', line
+ ;; numbers are disabled. For relative line numbers, set this to `relative'.
+ display-line-numbers-type t
 
-;; use visible buffer, not just the current line
-evil-snipe-scope 'visible
+ ;; use visible buffer, not just the current line
+ evil-snipe-scope 'visible
 
-;; Dired
+ ;; Dired
  dired-dwim-target t
 
-  ;; Workspaces
+ ;; Workspaces
  +workspaces-main "default"
  +workspaces-switch-project-function #'find-file
 
  ;; Reload buffers on file updates
-;; helps avoid file sync issues
+ ;; helps avoid file sync issues
  global-auto-revert-mode t)
 
 
@@ -72,8 +72,8 @@ evil-snipe-scope 'visible
   (:prefix "d"
    :desc "Ediff buffers" :nv "b" #'ediff-buffers)
   (:prefix "o"
-   (:prefix "M" :desc "Maps"
-    :desc "Search maps" :nv "s" #'osm-search))
+           (:prefix "M" :desc "Maps"
+            :desc "Search maps" :nv "s" #'osm-search))
   (:prefix "p"
    :desc "Open dired in project" :nv "d" #'projectile-dired
    :desc "Run async cmd in project" :nv "&" #'projectile-run-async-shell-command-in-root
@@ -98,8 +98,8 @@ evil-snipe-scope 'visible
 ;; help entries are often more long form. put them in a proper window
 ;; (set-popup-rule! "^\\*\\([Hh]elp\\|Apropos\\)" :ignore t)
 
-
-(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+(if (eq system-type 'darwin)
+    (add-hook 'window-setup-hook #'toggle-frame-fullscreen))
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -373,7 +373,7 @@ evil-snipe-scope 'visible
 ;; treemacs
 (after! treemacs
   (setq treemacs-position 'right
-        treemacs-show-hidden-files               nil
+        treemacs-show-hidden-file nil
         treemacs-git-mode 'deferred))
 
 ;; (use-package doom-modeline
@@ -394,6 +394,3 @@ evil-snipe-scope 'visible
 
 (setq ispell-program-name "aspell"
       ispell-dictionary "english")
-
-;; https://emacs.stackexchange.com/questions/2871/keeping-my-org-files-in-sync-across-multiple-computers
-;; (add-hook 'auto-save-hook 'org-save-all-org-buffers)
