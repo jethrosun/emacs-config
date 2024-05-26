@@ -394,3 +394,117 @@
 
 (setq ispell-program-name "aspell"
       ispell-dictionary "english")
+
+
+;; kernel
+;; Setting up linux kernel formatting options
+;;
+(defun linux-kernel-coding-style/c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+   (column (c-langelem-2nd-pos c-syntactic-element))
+   (offset (- (1+ column) anchor))
+   (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+;; Add Linux kernel style
+(add-hook 'c-mode-common-hook
+    (lambda ()
+      (c-add-style "linux-kernel"
+       '("linux" (c-offsets-alist
+            (arglist-cont-nonempty
+             c-lineup-gcc-asm-reg
+             linux-kernel-coding-style/c-lineup-arglist-tabs-only))))))
+
+(defun linux-kernel-coding-style/setup ()
+  (let ((filename (buffer-file-name)))
+    ;; Enable kernel mode for the appropriate files
+    (when (and buffer-file-name
+               ( or (string-match "linux" buffer-file-name)
+                    (string-match "liburing" buffer-file-name)))
+                    ;; (string-match "xfstests" buffer-file-name)))
+      (setq indent-tabs-mode t)
+      (setq tab-width 8)
+      (setq c-basic-offset 8)
+      (c-set-style "linux-kernel"))))
+
+(add-hook 'c-mode-hook 'linux-kernel-coding-style/setup)
+
+;; Configure LSP.
+;;
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(after! lsp-clangd (setq exec-path(append '("~/llvm-fb/9.0.0/bin/") exec-path)))
+
+(setq consult-cscope-use-initial t)
+(use-package! consult-cscope
+  :defer t
+  :commands (consult-cscope-symbol
+             consult-cscope-definition
+             consult-cscope-called-by
+             consult-cscope-calling
+             consult-cscope-text
+             consult-cscope-egrep
+             consult-cscope-file
+             consult-cscope-including
+             consult-cscope-assignment))
+
+(map! 
+  (:leader
+(:prefix "h" :desc "Search symbol" "s" 'consult-cscope-symbol)
+ (:prefix "h"   :desc "Search definition" "d" 'consult-cscope-definition)
+ (:prefix "h"   :desc "Search text" "t" 'consult-cscope-text)
+ (:prefix "h"   :desc "Search file" "f" 'consult-cscope-file)))
+
+;; git
+;; Configure git gutter.
+(custom-set-variables
+ '(git-gutter:added-sign "█|")
+ '(git-gutter:modified-sign "█⫶")
+ '(git-gutter:deleted-sign "█▁"))
+
+(after! git-gutter
+  (set-face-foreground 'git-gutter:modified "yellow"))
+
+;; key binding
+;; Overwrite existing key bindings.
+;;
+(map!
+  (:leader
+    (:prefix "b" :desc "Switch buffer" "b" 'consult-buffer)
+    (:prefix "b" :desc "Switch workspace buffer" "B" '+vertico/switch-workspace-buffer)
+    (:prefix "g" :desc "Format patch" "p" 'formatp-menu)))
+
+(map!
+ (:after evil-easymotion
+  :m "gs" evilem-map
+  (:map evilem-map
+   "l" #'avy-goto-line)))
+
+;; Overwrite existing key bindings.
+;;
+(map!
+  (:leader
+    (:prefix "b" :desc "Switch buffer" "b" 'consult-buffer)
+    (:prefix "b" :desc "Switch workspace buffer" "B" '+vertico/switch-workspace-buffer)
+    (:prefix "g" :desc "Format patch" "p" 'formatp-menu)))
+
+(map!
+ (:after evil-easymotion
+  :m "gs" evilem-map
+  (:map evilem-map
+   "l" #'avy-goto-line)))
+
+(defun my:see-all-whitespace () (interactive)
+       (setq whitespace-style (default-value 'whitespace-style))
+       (setq whitespace-display-mappings (default-value 'whitespace-display-mappings))
+       (whitespace-mode 'toggle))
+
+
+
