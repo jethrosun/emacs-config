@@ -28,11 +28,10 @@
  ;; Workspaces
  +workspaces-main "default"
  +workspaces-switch-project-function #'find-file
-
+;; +workspaces-switch-project-function #'magit-status
  ;; Reload buffers on file updates
  ;; helps avoid file sync issues
  global-auto-revert-mode t)
-
 
 ;; Ace window
 (after! ace-window
@@ -75,6 +74,7 @@
            (:prefix "M" :desc "Maps"
             :desc "Search maps" :nv "s" #'osm-search))
   (:prefix "p"
+   :desc "Find file in project" :nv "f" #'projectile-find-file-dwim
    :desc "Open dired in project" :nv "d" #'projectile-dired
    :desc "Run async cmd in project" :nv "&" #'projectile-run-async-shell-command-in-root
    :desc "Test project" :nv "t" #'projectile-test-project)

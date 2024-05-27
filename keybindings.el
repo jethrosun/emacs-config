@@ -225,5 +225,4 @@
 
 (map! :after org-roam
       :map org-mode-map
-
       "C-c i" #'bergheim/org-roam-create-node)
